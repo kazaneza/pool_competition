@@ -1,0 +1,66 @@
+{
+    "groups": [
+      {
+        "id": "A",
+        "name": "Group A",
+        "players": [
+          { "id": 1, "name": "Bienvenue", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 2, "name": "Kazaneza Gentil (BK)", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 3, "name": "Philbert", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 4, "name": "Richard Ntaganira", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 5, "name": "EddyKaba", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 6, "name": "Wilson", "played": 0, "won": 0, "lost": 0, "points": 0 }
+        ],
+        "matches": [
+          { "id": 1, "player1Id": 1, "player2Id": 2, "completed": false, "winner": null, "groupId": "A" },
+          { "id": 2, "player1Id": 3, "player2Id": 4, "completed": false, "winner": null, "groupId": "A" },
+          { "id": 3, "player1Id": 5, "player2Id": 6, "completed": false, "winner": null, "groupId": "A" }
+        ]
+      },
+      {
+        "id": "B",
+        "name": "Group B",
+        "players": [
+          { "id": 7, "name": "Rodrigue (BK)", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 8, "name": "Cedric H", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 9, "name": "Ricky (BK)", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 10, "name": "Juma BK", "played": 0, "won": 0, "lost": 0, "points": 0 }
+        ],
+        "matches": [
+          { "id": 4, "player1Id": 7, "player2Id": 8, "completed": false, "winner": null, "groupId": "B" },
+          { "id": 5, "player1Id": 9, "player2Id": 10, "completed": false, "winner": null, "groupId": "B" }
+        ]
+      },
+      {
+        "id": "C",
+        "name": "Group C",
+        "players": [
+          { "id": 11, "name": "Gad", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 12, "name": "Alain R.", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 13, "name": "Seboliver", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 14, "name": "herve", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 15, "name": "Ivan", "played": 0, "won": 0, "lost": 0, "points": 0 }
+        ],
+        "matches": [
+          { "id": 6, "player1Id": 11, "player2Id": 12, "completed": false, "winner": null, "groupId": "C" },
+          { "id": 7, "player1Id": 13, "player2Id": 14, "completed": false, "winner": null, "groupId": "C" },
+          { "id": 8, "player1Id": 14, "player2Id": 15, "completed": false, "winner": null, "groupId": "C" }
+        ]
+      },
+      {
+        "id": "D",
+        "name": "Group D",
+        "players": [
+          { "id": 16, "name": "I. Bruce (BK)", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 17, "name": "Celestin", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 18, "name": "Omer Nd", "played": 0, "won": 0, "lost": 0, "points": 0 },
+          { "id": 19, "name": "Gerald (BK)", "played": 0, "won": 0, "lost": 0, "points": 0 }
+        ],
+        "matches": [
+          { "id": 9, "player1Id": 16, "player2Id": 17, "completed": false, "winner": null, "groupId": "D" },
+          { "id": 10, "player1Id": 18, "player2Id": 19, "completed": false, "winner": null, "groupId": "D" }
+        ]
+      }
+    ]
+  }
+  
