@@ -16,14 +16,8 @@ async function dbConnect() {
     return cached.conn;
   }
   if (!cached.promise) {
-    const opts = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    };
-
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      return mongoose;
-    });
+    // Mongoose 6+ uses these defaults by default; no need to specify the options
+    cached.promise = mongoose.connect(MONGODB_URI);
   }
   cached.conn = await cached.promise;
   return cached.conn;
