@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"nodemon server.js\" \"vite\"",
+    "dev": "concurrently \"nodemon server.js\" \"vite --host\"",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seed": "node seeds/init.js"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "html2canvas": "^1.4.1",
     "lucide-react": "^0.344.0",

@@ -1,39 +1,49 @@
-// server.js (ES module version)
 import express from 'express';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import Group from './models/Group.js';
 
-// Necessary to simulate __dirname in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-const dataFilePath = path.join(__dirname, 'groupsData.json');
+const MONGODB_URI = process.env.MONGODB_URI;
+if (!MONGODB_URI) {
+  throw new Error('Please define the MONGODB_URI environment variable in your .env file');
+}
 
-// Endpoint to get groups data
-app.get('/api/groups', (req, res) => {
-  fs.readFile(dataFilePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error reading data:', err);
-      return res.status(500).json({ error: 'Failed to read data' });
-    }
-    res.json(JSON.parse(data));
-  });
+mongoose
+  .connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('Error connecting to MongoDB:', err));
+
+// GET endpoint to retrieve groups data from MongoDB
+app.get('/api/groups', async (req, res) => {
+  try {
+    const groups = await Group.find({});
+    res.json(groups);
+  } catch (error) {
+    console.error('Error fetching groups:', error);
+    res.status(500).json({ error: 'Failed to fetch groups' });
+  }
 });
 
-// Endpoint to save updated groups data
-app.post('/api/groups', (req, res) => {
-  const groups = req.body;
-  fs.writeFile(dataFilePath, JSON.stringify(groups, null, 2), (err) => {
-    if (err) {
-      console.error('Error saving data:', err);
-      return res.status(500).json({ error: 'Failed to save data' });
-    }
+// POST endpoint to update groups data in MongoDB
+app.post('/api/groups', async (req, res) => {
+  try {
+    const groups = req.body;
+    // Clear existing groups and insert the new data
+    await Group.deleteMany({});
+    await Group.insertMany(groups);
     res.json({ message: 'Data saved successfully' });
-  });
+  } catch (error) {
+    console.error('Error saving groups:', error);
+    res.status(500).json({ error: 'Failed to save groups' });
+  }
 });
 
 const PORT = process.env.PORT || 3001;

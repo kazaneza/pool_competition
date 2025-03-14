@@ -1,32 +1,37 @@
-// api/groups.js
-import fs from 'fs';
-import path from 'path';
+import dbConnect from '../../utils/dbConnect';
+import Group from '../../models/Group';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   const { method } = req;
+  
+  await dbConnect();
 
-  // Example: read or write a local JSON file
-  const dataFilePath = path.join(process.cwd(), 'groupsData.json');
+  switch (method) {
+    case 'GET':
+      try {
+        const groups = await Group.find({});
+        res.status(200).json(groups);
+      } catch (error) {
+        console.error('Error fetching groups:', error);
+        res.status(500).json({ error: 'Failed to fetch groups' });
+      }
+      break;
 
-  if (method === 'GET') {
-    fs.readFile(dataFilePath, 'utf8', (err, data) => {
-      if (err) {
-        console.error('Error reading data:', err);
-        return res.status(500).json({ error: 'Failed to read data' });
+    case 'POST':
+      try {
+        // Expecting req.body to be an array of groups or a single group object.
+        // Here we use insertMany to allow for bulk insertion.
+        const groups = req.body;
+        await Group.insertMany(groups);
+        res.status(200).json({ message: 'Groups saved successfully' });
+      } catch (error) {
+        console.error('Error saving groups:', error);
+        res.status(500).json({ error: 'Failed to save groups' });
       }
-      res.status(200).json(JSON.parse(data));
-    });
-  } else if (method === 'POST') {
-    const groups = req.body;
-    fs.writeFile(dataFilePath, JSON.stringify(groups, null, 2), (err) => {
-      if (err) {
-        console.error('Error saving data:', err);
-        return res.status(500).json({ error: 'Failed to save data' });
-      }
-      res.status(200).json({ message: 'Data saved successfully' });
-    });
-  } else {
-    res.setHeader('Allow', ['GET', 'POST']);
-    res.status(405).end(`Method ${method} Not Allowed`);
+      break;
+
+    default:
+      res.setHeader('Allow', ['GET', 'POST']);
+      res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
