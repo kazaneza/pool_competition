@@ -7,7 +7,7 @@
     "dev": "concurrently \"nodemon server.js\" \"vite\"",
     "build": "vite build",
     "lint": "eslint .",
-    "start": "node server.js"
+    "preview": "vite preview"
   },
   "dependencies": {
     "express": "^4.21.2",
