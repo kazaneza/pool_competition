@@ -12,7 +12,7 @@ app.use(express.json());
 
 const dataFilePath = path.join(__dirname, 'groupsData.json');
 
-// Example API endpoints
+// --- API ROUTES ---
 app.get('/api/groups', (req, res) => {
   fs.readFile(dataFilePath, 'utf8', (err, data) => {
     if (err) {
@@ -34,18 +34,19 @@ app.post('/api/groups', (req, res) => {
   });
 });
 
-// Serve the React build from 'dist' in production
+// --- SERVE REACT BUILD IN PRODUCTION ---
 if (process.env.NODE_ENV === 'production') {
   const distPath = path.join(__dirname, 'dist');
   // Serve all static files
   app.use(express.static(distPath));
-  // For any other routes, serve index.html so React can handle routing
+
+  // For any other route, serve index.html (so React can handle client-side routing)
   app.get('*', (req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
 }
 
-// Listen on whatever port is given by Vercel or 3001 locally
+// --- START SERVER ---
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
