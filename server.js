@@ -35,16 +35,15 @@ app.post('/api/groups', (req, res) => {
   });
 });
 
+// In production, serve static files from the Vite build output
 if (process.env.NODE_ENV === 'production') {
   const distPath = path.join(__dirname, 'dist');
   app.use(express.static(distPath));
-
-  // Fallback: send index.html for any unknown route
+  // Fallback route: send index.html for any unknown routes
   app.get('*', (req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
 }
-
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
