@@ -1,5 +1,5 @@
-import dbConnect from '../utils/dbConnect';
-import Group from '../models/Group';
+import dbConnect from '../utils/dbConnect.js';
+import Group from '../models/Group.js';
 
 export default async function handler(req, res) {
   const { method } = req;
