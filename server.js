@@ -14,10 +14,7 @@ if (!MONGODB_URI) {
 }
 
 mongoose
-  .connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Error connecting to MongoDB:', err));
 
@@ -35,10 +32,17 @@ app.get('/api/groups', async (req, res) => {
 // POST endpoint to update groups data in MongoDB
 app.post('/api/groups', async (req, res) => {
   try {
-    const groups = req.body;
-    // Clear existing groups and insert the new data
+    // Ensure req.body is treated as an array
+    const groupsInput = Array.isArray(req.body) ? req.body : [req.body];
+
+    // Clear existing groups and remove _id from each incoming group
     await Group.deleteMany({});
-    await Group.insertMany(groups);
+    const groupsToInsert = groupsInput.map(group => {
+      const { _id, ...rest } = group;
+      return rest;
+    });
+    
+    await Group.insertMany(groupsToInsert);
     res.json({ message: 'Data saved successfully' });
   } catch (error) {
     console.error('Error saving groups:', error);

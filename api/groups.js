@@ -19,10 +19,16 @@ export default async function handler(req, res) {
 
     case 'POST':
       try {
-        // Expecting req.body to be an array of groups or a single group object.
-        // Here we use insertMany to allow for bulk insertion.
-        const groups = req.body;
-        await Group.insertMany(groups);
+        // Ensure we have an array of groups, even if req.body is a single object
+        const groupsInput = Array.isArray(req.body) ? req.body : [req.body];
+
+        // Remove any existing _id so Mongo can generate new ones
+        const groupsToInsert = groupsInput.map(group => {
+          const { _id, ...rest } = group;
+          return rest;
+        });
+
+        await Group.insertMany(groupsToInsert);
         res.status(200).json({ message: 'Groups saved successfully' });
       } catch (error) {
         console.error('Error saving groups:', error);
